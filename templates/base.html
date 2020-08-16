@@ -1,0 +1,39 @@
+<html lang="en">
+<head>
+	<title>{% block title %}{% endblock title %}</title>
+	<meta charset="utf-8">
+	<meta name="viewpoint" content="width=device-width, initial-=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="shortcut icon" href="#">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	{{bootstrap.load_css()}}
+	{% block styles %}{% endblock styles%}
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-sm bg-light">
+		<a class="navbar-brand" href="#">IM Project</a>
+		<div>
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="{{url_for('TTS')}}">Text to Speech</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{url_for('OTA')}}">Owl to Ace</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{url_for('TTSapi')}}">OWl to Speech</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div style="padding-left:10px">
+		{% block content %}{% endblock content %}
+	</div>
+	<script>
+		{% block scripts %}
+			{{ bootstrap.load_js()}}
+		{% endblock scripts %}
+	</script>
+</body>	
+</html>

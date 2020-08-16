@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}OWL To ACE{% endblock title %}
+{% block content %}
+	<div id="OWLpart">
+		<label for="story">Please upload the OWL file</label><br>
+		<input type="file" id="story" name="owlfile">
+	</div>
+	<div id="outputpart">
+		<textarea id="output" cols="60" rows="20">Waiting for the input...</textarea>
+		<button id="ota" onclick="uploadowl()">OWL to ACE</button>
+	</div>
+{% endblock content %}
+
+{% block scripts %}
+	var fname=[];
+	function uploadowl(){
+		var story = document.getElementById("story").files[0];
+		if( story != ''  && output != ''){
+			var filename=(new Date().toISOString()).replace(/:/g,"_");
+			fname.push(filename);
+			var output_text=document.getElementById("output");
+			output_text.innerHTML="Reasoning...";
+		}
+
+		var up= new FormData();
+		up.append('filename',filename);
+		up.append('story',story);
+		$.ajax({
+			type: 'POST',
+			url: '/savetxt',
+			data: up,
+			processData: false,
+			contentType: false
+		}).done(function(data){
+			result = document.getElementById("output");
+			console.log(data['result']);
+			if(data['result'] == 'True'){
+				result.innerHTML = 'Yes.';
+			}
+			else if(data['result'] == 'False'){
+				result.innerHTML = 'False.';
+			}
+			else{
+				result.innerHTML = data['result'];
+			}
+		}).fail(function(jQXHR,textStatus,error){
+			console.log('Upload failed');
+		});
+	}
+{% endblock scripts %}
