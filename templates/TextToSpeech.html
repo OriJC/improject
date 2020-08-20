@@ -1,13 +1,21 @@
 {% extends "base.html" %}
-{% block title %}{% endblock title %}
+{% block title %}Text to Speech{% endblock title %}
 {% block content %}
 	<div id="ttspart">
+		<label for="output">Please input the text</label><br>
 		<textarea id="output" cols="60" rows="20">Waiting for the input....</textarea>
+		<select id="voicegender">
+			<option value="male1">Male1</option>
+			<option value="male2">Male2</option>
+			<option value="female1">Female1</option>
+			<option value="female2">Female2</option>
+			<option value="robot">Robot</option>
+		</select>
 		<button id="tts" onclick="uploadText();">Text to Speech</button>
 		<button id="delete" onclick="deleteText();">Reset</button>
 		<div align="left">
 			<audio id="audio" controls>
-				<source id="audio_source"src="#" type="audio/mpeg" >
+				<source id="audio_source" src="#" type="audio/mpeg" >
 			</audio>
 		</div>
 	</div>
@@ -16,8 +24,9 @@
 {% block scripts %}
 	function uploadText(){
 		var text=document.getElementById("output").value;
+		var voice=document.getElementById("voicegender").value;
 		var up =new FormData();
-		up.append('voice','female2');
+		up.append('voice',voice);
 		up.append('text',text);
 		console.log(text);
 		$.ajax({
@@ -33,6 +42,7 @@
 		var aud = document.getElementById("audio");
 		aud.load();
 		aud.play();
+
 		if(data['result'] == true)
 			console.log("Reload successfully!!!");
 		else 

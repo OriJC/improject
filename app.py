@@ -25,6 +25,9 @@ def TTS():
 def OTA():
 	return render_template('OWLToACE.html')
 
+@app.route('/OTS')
+def OTS():
+	return render_template('OWLToSpeech.html')
 
 @app.route('/savetxt', methods=['POST'])
 def savetxt():
@@ -47,19 +50,19 @@ def TTSapi():
 		lang='en-US'
 		if(request.values['voice'])=='male1':
 			name="en-US-Wavenet-D"
-			gender=texttospeech.enums.SsmlVoiceGender.MALE
+			gender=texttospeech.SsmlVoiceGender.MALE
 		elif(request.values['voice']=='female1'):
 			name="en-US-Wavenet-F"
-			gender=texttospeech.enums.SsmlVoiceGender.FEMALE
+			gender=texttospeech.SsmlVoiceGender.FEMALE
 		elif(request.values['voice']=='male2'):
 			name="en-US-Wavenet-A"
-			gender=texttospeech.enums.SsmlVoiceGender.MALE
+			gender=texttospeech.SsmlVoiceGender.MALE
 		elif(request.values['voice']=='female2'):
 			name="en-US-Wavenet-E"
-			gender=texttospeech.enums.SsmlVoiceGender.FEMALE
+			gender=texttospeech.SsmlVoiceGender.FEMALE
 		elif(request.values['voice']=='robot'):
 			name="en-GB-standard-A"
-			gender=texttospeech.enums.SsmlVoiceGender.MALE
+			gender=texttospeech.SsmlVoiceGender.MALE
 			speed=0.66
 			pitch=-10.40
 			lang='en-GB'
@@ -71,6 +74,7 @@ def TTSapi():
 			'speed':speed,
 			'pitch':pitch
 			})
+		applic(message)
 		return jsonify({'result': True})
 	return jsonify({'result': False})
 
@@ -83,17 +87,17 @@ def owlverb(storypath):
 def applic(message):
 	client = texttospeech.TextToSpeechClient()
 	message=json.loads(message)
-	synthesis_input = texttospeech.types.SynthesisInput(text=message['inputtext'])
-	voice = texttospeech.types.VoiceSelectionParams(
+	synthesis_input = texttospeech.SynthesisInput(text=message['inputtext'])
+	voice = texttospeech.VoiceSelectionParams(
     language_code=message['lang'],
     ssml_gender=message['gender'],
     name=message['name'])
-	audio_config = texttospeech.types.AudioConfig(
+	audio_config = texttospeech.AudioConfig(
 	speaking_rate=message['speed'],
 	pitch=message['pitch'],
-	audio_encoding=texttospeech.enums.AudioEncoding.MP3)
-	response = client.synthesize_speech(synthesis_input, voice, audio_config)
-	with open('static/output.mp3', 'wb') as out:
+	audio_encoding=texttospeech.AudioEncoding.MP3)
+	response = client.synthesize_speech(input=synthesis_input, voice=voice, audio_config=audio_config)
+	with open('./static/output.mp3', 'wb') as out:
 		out.write(response.audio_content)
 		print('Audio content written to file "output.mp3"')
 	return send_file('./static/output.mp3',attachment_filename='output.mp3')

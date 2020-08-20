@@ -12,7 +12,7 @@
 
 <body>
 	<nav class="navbar navbar-expand-sm bg-light">
-		<a class="navbar-brand" href="#">IM Project</a>
+		<a class="navbar-brand" href="{{url_for('home')}}">IM Project</a>
 		<div>
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item">
@@ -22,12 +22,12 @@
 					<a class="nav-link" href="{{url_for('OTA')}}">Owl to Ace</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="{{url_for('TTSapi')}}">OWl to Speech</a>
+					<a class="nav-link" href="{{url_for('OTS')}}">Owl to Speech</a>
 				</li>
 			</ul>
 		</div>
 	</nav>
-	<div style="padding-left:10px">
+	<div style="padding-left:15px">
 		{% block content %}{% endblock content %}
 	</div>
 	<script>
