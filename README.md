@@ -1,9 +1,16 @@
 # improject
 以下大部分的過程都在window 10的環境中進行，其他os可能操作和code上會有點不一樣
 
-Python 需要3.7以後的版本(因為3.7 subprocess.run 有新增 capture_output)
+Python 需要3.7以後的版本 (因為3.7 subprocess.run 有新增 capture_output)
 ## 安裝虛擬環境
-pip install virtualenv
+
+```bash
+pip install virtualenv #optional if you want to use virtualenv
+pip install --upgrade google-cloud-texttospeech flask
+```
+
+`setup.sh` (Mac OS, Linux, BSD) and `setup.bat` (Windows) are both setup scripts and does create the virtual environment and also install the required pip files
+
 ## 架構虛擬環境
 
 在cmd中進入目標資料夾
