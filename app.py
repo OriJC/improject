@@ -31,9 +31,9 @@ def OTA():
 def OTS():
 	return render_template('OWLToSpeech.html')
 
-@app.route('/race')
-def race():
-	return render_template('race.html')
+@app.route('/TTR')
+def TTR():
+	return render_template('TextToRace.html')
 
 @app.route('/savetxt', methods=['POST'])
 def savetxt():
