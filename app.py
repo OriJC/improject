@@ -5,6 +5,8 @@ import json
 from werkzeug.utils import secure_filename
 from google.cloud import texttospeech
 
+import route
+
 app=Flask(__name__)
 bootstrap=Bootstrap(app)
 
@@ -28,6 +30,10 @@ def OTA():
 @app.route('/OTS')
 def OTS():
 	return render_template('OWLToSpeech.html')
+
+@app.route('/race')
+def race():
+	return render_template('race.html')
 
 @app.route('/savetxt', methods=['POST'])
 def savetxt():
@@ -78,7 +84,6 @@ def TTSapi():
 		applic(message,filename)
 		return jsonify({'result': True,'filename':filename})
 	return jsonify({'result': False})
-
 
 def owlverb(storypath):
 	result=subprocess.run(['owl_to_ace.exe','-xml',f'upload/{storypath}'],capture_output=True,shell=True)
