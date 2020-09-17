@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 {% block title %}TextToRace{% endblock title %}
 
+<script src="{{url_for('static', filename='uploadRace.js')}}"></script>
+
 {% block content %}
+
 <div id="ttrpart">
     <label for="output">Please input the text</label><br>
     <textarea id="output" cols="60" rows="20">Waiting for the input....</textarea>
