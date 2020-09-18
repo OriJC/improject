@@ -25,12 +25,21 @@ workon 子資料夾
 
 大部分的套件直接用 pip install <套件名字> 就可以安裝好
 
-###Bootstrap-Flask
+### Flask 
+
+pip install Flask 
+
+### Bootstrap-Flask
 
 前端用，不安裝也可以(要把code中bootstrap的部分刪除掉)
 
-Flask有一個叫Flask-Bootstrap的套件，不過很久沒有更新，安裝時不要安裝錯
+Flask另外有一個叫Flask-Bootstrap的套件，不過很久沒有更新，安裝時不要安裝錯
 
+### GCP Text-to-Speech
+
+pip install --upgrade google-cloud-texttospeech
+
+Google的 Text to Speech API，其他可以用的有Microsoft Azure等等
 
 
 
