@@ -23,3 +23,14 @@ workon 子資料夾
 
 ## 安裝套件
 
+大部分的套件直接用 pip install <套件名字> 就可以安裝好
+
+###Bootstrap-Flask
+
+前端用，不安裝也可以(要把code中bootstrap的部分刪除掉)
+
+Flask有一個叫Flask-Bootstrap的套件，不過很久沒有更新，安裝時不要安裝錯
+
+
+
+
