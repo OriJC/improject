@@ -6,7 +6,6 @@ Python 需要3.7以後的版本 (因為3.7 subprocess.run 有新增 capture_outp
 
 ```bash
 pip install virtualenv #optional if you want to use virtualenv
-pip install --upgrade google-cloud-texttospeech flask
 ```
 
 `setup.sh` (Mac OS, Linux, BSD) and `setup.bat` (Windows) are both setup scripts and does create the virtual environment and also install the required pip files
@@ -27,8 +26,11 @@ workon 子資料夾
 
 ### Flask 
 
+```bash
+
 pip install Flask 
 
+```
 ### Bootstrap-Flask
 
 前端用，不安裝也可以(要把code中bootstrap的部分刪除掉)
@@ -37,8 +39,12 @@ Flask另外有一個叫Flask-Bootstrap的套件，不過很久沒有更新，安
 
 ### GCP Text-to-Speech
 
+```bash
+
 pip install --upgrade google-cloud-texttospeech
 
+```
+ 
 Google的 Text to Speech API，其他可以用的有Microsoft Azure等等
 
 
