@@ -18,7 +18,12 @@ virtualenv 子資料夾 (這個子資料夾的名稱就自己去取，會作為�
 
 會生成一個子資料夾作為虛擬環境
 
+
+## 使用虛擬環境
+
+```bash
 workon 子資料夾
+```
 
 ## 安裝套件
 
@@ -46,6 +51,7 @@ pip install --upgrade google-cloud-texttospeech
 ```
  
 Google的 Text to Speech API，其他可以用的有Microsoft Azure等等
+
 
 
 
