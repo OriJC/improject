@@ -102,6 +102,10 @@ def applic(message):
 		print('Audio content written to file "output.mp3"')
 	return send_file('./static/output.mp3',attachment_filename='output.mp3')
 
+@app.route('/deleteText',methods=['POST'])
+def deleteText():
+	os.remove('./static/output.mp3')
+	return jsonify({'text':"File removed!"})
 
 if __name__=='__main__':
 	app.run(debug=True)

@@ -53,4 +53,23 @@
 		});
 
 		}
+
+		function deleteText()
+		{
+			$.ajax({
+				type: 'POST',
+				url: '/deleteText',
+				data: '',
+				processData: false,
+				contentType: false
+			}).done(function(data){
+			document.getElementById("audio_source").src="";
+			document.getElementById("output").value="Delete text Successful";
+			location.reload();
+		}).fail(function(jqXHR,textStatus,error){
+			console.log("Delete text failed");
+		});
+			
+		}
+		
 {% endblock scripts %}
