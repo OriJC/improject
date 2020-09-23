@@ -12,7 +12,7 @@
 			<option value="robot">Robot</option>
 		</select>
 		<button id="tts" onclick="uploadText();">Text to Speech</button>
-		<button id="delete" onclick="deleteText();">Reset</button>
+		<button type="button" id="delete" onclick="deleteText();">Reset</button>
 		<div align="left">
 			<audio id="audio" controls>
 				<source id="audio_source" src="#" type="audio/mpeg" >
@@ -26,8 +26,11 @@
 		var text=document.getElementById("output").value;
 		var voice=document.getElementById("voicegender").value;
 		var up =new FormData();
+		var filename= new Date().getTime();
+		console.log(filename);
 		up.append('voice',voice);
 		up.append('text',text);
+		up.append('filename',filename);
 		console.log(text);
 		$.ajax({
 			type: 'POST',
@@ -36,13 +39,14 @@
 			processData: false,
 			contentType: false	
 		}).done(function(data){
+		file=data['filename']+'.mp3';
+		console.log(file);
 		console.log("Text to Speech upload successful!");
 		document.getElementById("audio_source").src="";
-		document.getElementById("audio_source").src="{{ url_for('static',filename='output.mp3')}}";
+		document.getElementById("audio_source").src="../static/"+file;
 		var aud = document.getElementById("audio");
 		aud.load();
 		aud.play();
-
 		if(data['result'] == true)
 			console.log("Reload successfully!!!");
 		else 
@@ -71,5 +75,4 @@
 		});
 			
 		}
-		
 {% endblock scripts %}

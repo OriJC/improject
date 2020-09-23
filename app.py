@@ -45,6 +45,7 @@ def savetxt():
 def TTSapi():
 	if request.method == 'POST':
 		text=request.values['text']
+		filename=request.values['filename'];
 		pitch=0
 		speed=1
 		lang='en-US'
@@ -74,8 +75,8 @@ def TTSapi():
 			'speed':speed,
 			'pitch':pitch
 			})
-		applic(message)
-		return jsonify({'result': True})
+		applic(message,filename)
+		return jsonify({'result': True,'filename':filename})
 	return jsonify({'result': False})
 
 
@@ -84,7 +85,7 @@ def owlverb(storypath):
 	return result.stdout.decode()
 
 
-def applic(message):
+def applic(message,filename):
 	client = texttospeech.TextToSpeechClient()
 	message=json.loads(message)
 	synthesis_input = texttospeech.SynthesisInput(text=message['inputtext'])
@@ -97,10 +98,10 @@ def applic(message):
 	pitch=message['pitch'],
 	audio_encoding=texttospeech.AudioEncoding.MP3)
 	response = client.synthesize_speech(input=synthesis_input, voice=voice, audio_config=audio_config)
-	with open('./static/output.mp3', 'wb') as out:
+	with open(f'./static/{filename}.mp3', 'wb') as out:
 		out.write(response.audio_content)
 		print('Audio content written to file "output.mp3"')
-	return send_file('./static/output.mp3',attachment_filename='output.mp3')
+	return send_file('./static/output.mp3',attachment_filename=f'{filename}.mp3')
 
 @app.route('/deleteText',methods=['POST'])
 def deleteText():
