@@ -1,20 +1,26 @@
 {% extends "base.html" %}
 {% block title %}OWL to Speech{% endblock title %}
-{% block content %}
-	<div id="inputpart">
-		<label for="story">Please upload the OWL file:</label>
-		<input type="file" name="owlfile" id="story"><br>
-		<button id="ota" onclick="uploadowl();">OWL to ACE</button>
-
-	</div>
-	<div id="textpart">
-		<textarea id="text" cols="60" rows="20">Waiting for the input....</textarea>
-		<button id="ATS" onclick="uploadText();">Text to Speech</button>
-	</div>
-	<div align="left">
-		<audio id="audio" controls>
-			<source id="audio_source" src="#" type="audio/mpeg" >
-		</audio>
+{% block content %}	
+	<div class="row">
+		<div class="col">
+			<div id="inputpart">
+				<label for="story">Please upload the OWL file:</label>
+				<input type="file" name="owlfile" id="story"><br>
+				<button id="ota" onclick="uploadowl();">OWL to ACE</button>
+			</div>
+		</div>
+		<div class="col">
+			<div id="textpart">
+				<textarea id="text" cols="60" rows="20">Waiting for the input....</textarea><br>
+				<button id="ATS" onclick="uploadText();">Text to Speech</button>
+				<button id="reset" onclick="resettext();">Reset</button>
+			</div>
+			<div align="left">
+				<audio id="audio" controls>
+					<source id="audio_source" src="#" type="audio/mpeg">
+				</audio>
+			</div>
+		</div>
 	</div>
 {% endblock content %}
 {% block scripts %}
@@ -59,8 +65,11 @@
 	function uploadText(){
 		var text=document.getElementById("text").value;
 		var up =new FormData();
+		var filename=new Date().getTime();
 		up.append('voice','female2');
 		up.append('text',text);
+		up.append('filename',filename);
+		console.log(filename);
 		console.log(text);
 		$.ajax({
 			type: 'POST',
@@ -69,21 +78,27 @@
 			processData: false,
 			contentType: false	
 		}).done(function(data){
+		file=data['filename']+'.mp3';
+		console.log(file);
 		console.log("Text to Speech upload successful!");
 		document.getElementById("audio_source").src="";
-		document.getElementById("audio_source").src="{{ url_for('static',filename='output.mp3')}}";
+		document.getElementById("audio_source").src="../static/"+file;
 		var aud = document.getElementById("audio");
 		aud.load();
 		aud.play();
-
-		if(data['result'] == true)
-			console.log("Reload successfully!!!");
+		if(data['result'] == true){
+			console.log("TTS successfully!!!");
+		}
 		else 
 			console.log("TTS Failed");
 
 		}).fail(function(jqXHR,textStatus,error){
 			console.log("Upload text failed!");
 		});
+		}
 
+		function resettext(){
+			localStorage.clear();
+			window.location.reload();
 		}
 {% endblock scripts %}
