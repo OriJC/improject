@@ -65,6 +65,13 @@ pip install --upgrade google-cloud-texttospeech
  
 Google的 Text to Speech API，其他可以用的有Microsoft Azure等等
 
+### Requests
 
+```bash
 
+pip install --upgrade requests
+
+```
+
+To POST the requests in SOAP format for RACE server. 
 
