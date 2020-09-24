@@ -17,7 +17,11 @@ pip install virtualenv # optional if you want to use virtualenv
 3. 會生成一個子資料夾作為虛擬環境
 4. workon 子資料夾
 
+## 使用虛擬環境
+
 ```bash
+workon 子資料夾
+
 cd <dir>
 
 # Creating a virtual environment
@@ -28,11 +32,9 @@ python -m venv . # Or use python's own venv environment
 Scripts\activate.bat # Windows
 source bin/activate # POSIX
 
-
-## 使用虛擬環境
-
-```bash
-workon 子資料夾
+# Deactivating the virtual environment
+deactivate
+```
 
 # Deactivating the virtual environment
 deactivate
