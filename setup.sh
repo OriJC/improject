@@ -1,3 +1,3 @@
 python -m venv .
 source bin/activate
-pip install --upgrade pip google-cloud-texttospeech flask
+pip install --upgrade pip google-cloud-texttospeech flask Bootstrap-Flask
