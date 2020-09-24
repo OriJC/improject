@@ -1,14 +1,22 @@
 {% extends "base.html" %}
 {% block title %}TextToRace{% endblock title %}
 
-<script src="{{url_for('static', filename='uploadRace.js')}}"></script>
-
 {% block content %}
+
+
+<script type=text/javascript src="{{url_for('static', filename='js/TextToRace.js')}}"></script>
 
 <div id="ttrpart">
     <label for="output">Please input the text</label><br>
-    <textarea id="output" cols="60" rows="20">Waiting for the input....</textarea>
-    <button id="post_to_race" onclick="">Post to Race</button>
+    <textarea id="output" cols="60" rows="20">Input...</textarea>
+    <br>
+    <select id="UseCase">
+        <option value="CheckConsistency">Check Consistency</option>
+        <option value="Prove">Prove</option>
+        <option value="Query">Query</option>
+    </select>
+    <button id="ttr" onclick="uploadTextTTR();">Text to race</button>
     <button id="delete" onclick="deleteText();">Reset</button>
 </div>
+
 {% endblock content %}
