@@ -35,11 +35,12 @@ deactivate
 ## 安裝套件
 
 ```bash
-pip install --upgrade google-cloud-texttospeech flask
+pip install --upgrade google-cloud-texttospeech flask requests
 ```
 
 - Flask: To run the web server
 - google-cloud-texttospeech: To provide text to speech capabilities 
+- requests: to post SOAP messages to the RACE server
 
 ## Run
 
