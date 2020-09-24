@@ -37,8 +37,6 @@ deactivate
 ```
 
 # Deactivating the virtual environment
-deactivate
-```
 
 ## 安裝套件
 
@@ -51,6 +49,7 @@ deactivate
 pip install Flask 
 
 ```
+
 ### Bootstrap-Flask
 
 前端用，不安裝也可以(要把code中bootstrap的部分刪除掉)
