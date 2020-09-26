@@ -44,13 +44,14 @@ def TTR():
 @app.route('/TTRA', methods=['POST'])
 def PostToRace():
     if request.method == 'POST':
-        axioms = request.values['text']
-        axioms = axioms.replace('\n', ' ')
-        # remove all the \n from the axioms so it fits the xml
+        axioms = request.values['axioms']
+        query = request.values['query']
         UseCase = request.values['UseCase']
+
         url = "http://attempto.ifi.uzh.ch/ws/race/racews.perl"
         headers = {'content-type': 'application/soap+xml'}
         # headers = {'content-type': 'text/xml'}
+        # !Use the above if somehow the above doesn't work
         body = f"""<?xml version="1.0" encoding="UTF-8"?>
 
 <env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
@@ -65,7 +66,7 @@ def PostToRace():
         print(body)
         response = requests.post(url, data=body, headers=headers)
         print(response.text)
-    return response.text
+    return jsonify({'result': 'True'})
 
 
 @app.route('/savetxt', methods=['POST'])
