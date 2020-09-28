@@ -2,6 +2,22 @@
 以下大部分的過程都在window 10的環境中進行，其他os可能操作和code上會有點不一樣
 
 Python 需要3.7以後的版本 (因為3.7 subprocess.run 有新增 capture_output)
+
+## Submodules <owl-verbalizer>
+
+This submodule is used for the recompilation of `owl_to_ace.exe` if it doesn't work. You could go into the directory and then use the makefile to compile it. Remember to get `SWI-Prolog` installed on your system before compiling. When **git cloning** this repository, you could use
+
+```bash
+git clone --recurse-submodule <url> # or the below
+git clone --recursive <url>
+```
+
+to save the process of doint the process down the line
+
+```bash
+git submodule update --init
+```
+
 ## 安裝虛擬環境
 
 ```bash
@@ -51,7 +67,4 @@ pip install --upgrade google-cloud-texttospeech
 ```
  
 Google的 Text to Speech API，其他可以用的有Microsoft Azure等等
-
-
-
 

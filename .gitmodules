@@ -1,0 +1,3 @@
+[submodule "owl-verbalizer"]
+	path = owl-verbalizer
+	url = https://github.com/Kaljurand/owl-verbalizer
