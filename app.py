@@ -7,6 +7,7 @@ from werkzeug.utils import secure_filename
 from google.cloud import texttospeech
 import requests
 import xml.etree.ElementTree as ET
+import PostSoap as ps
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
@@ -51,21 +52,12 @@ def PostToRace():
         url = "http://attempto.ifi.uzh.ch/ws/race/racews.perl"
         headers = {'content-type': 'application/soap+xml'}
         # headers = {'content-type': 'text/xml'}
-        # !Use the above if somehow the above doesn't work
-        body = f"""<?xml version="1.0" encoding="UTF-8"?>
-
-<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
-    <env:Body>
-        <race:Request xmlns:race="http://attempto.ifi.uzh.ch/race">
-            <race:Axioms>{axioms}</race:Axioms>
-            <race:Mode>{UseCase}</race:Mode>
-        </race:Request>
-    </env:Body>
-</env:Envelope>
-"""
+        # !Use the above if somehow the above^2 doesn't work
+        body = ps.MessageForPost(UseCase, axioms, query)
         print(body)
         response = requests.post(url, data=body, headers=headers)
         print(response.text)
+        ps.DecypherResponse(response.text)
     return jsonify({'result': 'True'})
 
 
