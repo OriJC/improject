@@ -1,3 +1,3 @@
-python -m venv .
+python3 -m venv .
 Scripts\activate.bat
-pip install --upgrade google-cloud-texttospeech flask Bootstrap-Flask
+pip install --upgrade -r requirements.txt
