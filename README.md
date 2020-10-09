@@ -68,3 +68,8 @@ pip install --upgrade google-cloud-texttospeech
  
 Google的 Text to Speech API，其他可以用的有Microsoft Azure等等
 
+### server用cmd
+```bash
+netstat -npl
+nohup program --host=0.0.0.0 &
+```
