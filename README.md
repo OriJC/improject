@@ -12,10 +12,22 @@ git clone --recurse-submodule <url> # or the below
 git clone --recursive <url>
 ```
 
-to save the process of doint the process down the line
+to save the process of doing the process down the line
 
 ```bash
 git submodule update --init
+```
+
+and to compile the `owl_to_ace.exe` file, just type
+
+```bash
+sh make_exe.sh
+```
+
+if you're in a Linux server environment using bash and move it to the outer file by
+
+```bash
+mv owl_to_ace.exe ..
 ```
 
 ## 安裝虛擬環境
@@ -41,6 +53,12 @@ virtualenv 子資料夾 (這個子資料夾的名稱就自己去取，會作為�
 workon 子資料夾
 ```
 
+if you're on the server, use
+
+```bash
+source bin/activate
+```
+
 ## 安裝套件
 
 大部分的套件直接用 pip 就可以安裝好
@@ -48,9 +66,7 @@ workon 子資料夾
 ### Flask 
 
 ```bash
-
 pip install Flask 
-
 ```
 ### Bootstrap-Flask
 
@@ -61,14 +77,13 @@ Flask另外有一個叫Flask-Bootstrap的套件，不過很久沒有更新，安
 ### GCP Text-to-Speech
 
 ```bash
-
 pip install --upgrade google-cloud-texttospeech
-
 ```
  
 Google的 Text to Speech API，其他可以用的有Microsoft Azure等等
 
 ### server用cmd
+
 ```bash
 netstat -npl
 nohup program --host=0.0.0.0 &
