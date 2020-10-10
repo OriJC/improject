@@ -36,8 +36,6 @@ source bin/activate # POSIX
 deactivate
 ```
 
-# Deactivating the virtual environment
-
 ## 安裝套件
 
 大部分的套件直接用 pip 就可以安裝好
