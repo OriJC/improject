@@ -13,6 +13,11 @@ tail = (
     f"</env:Envelope>"
 )
 
+ns = {
+    'env': "http://schemas.xmlsoap.org/soap/envelope/",
+    'race': "http://attempto.ifi.uzh.ch/race"
+}
+
 
 def MessageForPost(action, story, query=None):
     body = ""
@@ -44,7 +49,6 @@ def MessageForPost(action, story, query=None):
 
 def DecypherResponse(response):
     root = ET.fromstring(response)
-    print(root.tag, root.attrib)
-    for child in root:
-
-        # have not finished
+    respect = root.findall('race:Reply', ns)
+    print(respect)
+    # have not finished
