@@ -53,12 +53,16 @@ def PostToRace():
         headers = {'content-type': 'application/soap+xml'}
         # headers = {'content-type': 'text/xml'}
         # !Use the above if somehow the above^2 doesn't work
+        
         body = ps.MessageForPost(UseCase, axioms, query)
-        print(body)
         response = requests.post(url, data=body, headers=headers)
         print(response.text)
-        ps.DecypherResponse(response.text)
-    return jsonify({'result': 'True'})
+        runtime, message, reason = ps.DecypherResponse(response.text, UseCase)
+    return jsonify(
+        runtime=runtime,
+        message=message,
+        reason=reason
+        )
 
 
 @app.route('/savetxt', methods=['POST'])

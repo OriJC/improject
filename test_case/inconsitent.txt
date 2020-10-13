@@ -1,0 +1,5 @@
+Every man is a human.
+Every woman is a human.
+Mary is a woman.
+John is a man.
+John is not a human.
