@@ -5,6 +5,7 @@
 
 
 <script type=text/javascript src="{{url_for('static', filename='js/submit_post.js')}}"></script>
+<script type=text/javascript src="{{url_for('static', filename='js/reset.js')}}"></script>
 
 <div id="ttrpart">
     <div class="d-sm-flex flex-wrap">
@@ -17,13 +18,14 @@
             <textarea class="form-control" id="query" rows="20">Input...</textarea>
         </div>
     </div>
-    <select id="UseCase">
-        <option value="check_consistency">Check Consistency</option>
-        <option value="prove">Prove</option>
-        <option value="answer_query">Query</option>
+    <select id="UseCase" class="dropdown">
+        <option value="check_consistency" class="dropdown-item">Check Consistency</option>
+        <option value="prove" class="dropdown-item">Prove</option>
+        <option value="answer_query" class="dropdown-item">Query</option>
     </select>
+
     <button id="ttr" class="btn btn-primary" onclick="submit_post();">Text to race</button>
-    <button id="delete" class="btn btn-secondary" onclick="deleteText();">Reset</button>
+    <button id="delete" class="btn btn-secondary" onclick="reset();">Reset</button>
 </div>
 
 {% endblock content %}

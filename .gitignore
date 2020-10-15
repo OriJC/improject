@@ -6,3 +6,5 @@ pyvenv.cfg
 share
 __pycache__
 *.pdf
+asd.json
+nohup.out
