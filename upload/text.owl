@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Ontology
+    xml:base="http://www.w3.org/2002/07/owl#"
+    xmlns="http://www.w3.org/2002/07/owl#"
+    ontologyIRI="http://attempto.ifi.uzh.ch/ontologies/owlswrl/test">
+  <ClassAssertion>
+    <ObjectIntersectionOf>
+    <Class
+	  IRI="http://attempto.ifi.uzh.ch/ontologies/owlswrl/test#normal"/>
+      <Class
+	  IRI="http://attempto.ifi.uzh.ch/ontologies/owlswrl/test#student"/>
+    </ObjectIntersectionOf>
+    <NamedIndividual
+	IRI="http://attempto.ifi.uzh.ch/ontologies/owlswrl/test#Mary"/>
+  </ClassAssertion>
+</Ontology>

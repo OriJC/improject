@@ -88,8 +88,8 @@ def TTSapi():
 
 
 def owlverb(storypath):
-    result = subprocess.run(
-        [f'{exec_head}owl_to_ace.exe', '-xml', f'upload/{storypath}'], capture_output=True, shell=True)
+    result = subprocess.run([f'{exec_head}owl_to_ace.exe', '-xml',
+                             f'upload/{storypath}'], capture_output=True, shell=True)
     return result.stdout.decode()
 
 

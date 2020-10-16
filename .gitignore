@@ -6,3 +6,5 @@ pyvenv.cfg
 share
 __pycache__
 *.exe
+nohup.out
+asd.json
