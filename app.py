@@ -23,10 +23,15 @@ exec_head = "./" if platform.system() != "Windows" else ""
 def home():
     return render_template('index.html')
 
-
-@app.route('/TTS')
+@app.route('/TTS', methods=["POST", "GET"])
 def TTS():
-    return render_template('TextToSpeech.html')
+    if request.method == "POST":
+        text = request.values['conclusion']
+        print("!!POST----" + text)
+    else:
+        text = request.args.get('conclusion', "Waiting for the input....")
+        print("!!GET-----" + text)
+    return render_template('TextToSpeech.html', textarea=text)
 
 
 @app.route('/OTA')
@@ -44,7 +49,7 @@ def TTR():
     return render_template('TextToRace.html')
 
 
-@app.route('/TTRA', methods=['POST'])
+@app.route('/TTR', methods=['POST'])
 def PostToRace():
     if request.method == 'POST':
         axioms = request.values['axioms']
@@ -59,13 +64,20 @@ def PostToRace():
         body = ps.MessageForPost(UseCase, axioms, query)
         response = requests.post(url, data=body, headers=headers)
         print(response.text)
-        runtime, message, reason = ps.DecypherResponse(response.text, UseCase)
+        runtime, message, reason, conclusion = ps.DecypherResponse(response.text, UseCase, query)
     return jsonify(
         runtime=runtime,
         message=message,
-        reason=reason
+        reason=reason,
+        conclusion=conclusion
     )
 
+@app.route('/TTR-redirect', methods=['POST'])
+def redirect_to_tts():
+    conclusions = ''
+    if request.method == 'POST':
+        conclusions = request.values['conclusion']
+    return redirect(url_for('/TTS', conclusion=conclusions))
 
 @app.route('/savetxt', methods=['POST'])
 def savetxt():
