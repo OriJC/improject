@@ -33,24 +33,35 @@ mv owl_to_ace.exe ..
 ## 安裝虛擬環境
 
 ```bash
-pip install virtualenv #optional if you want to use virtualenv
+pip install virtualenv # optional if you want to use virtualenv
 ```
 
-`setup.sh` (Mac OS, Linux, BSD) and `setup.bat` (Windows) are both setup scripts and does create the virtual environment and also install the required pip files
+`setup.sh` (Mac OS, Linux, BSD) and `setup.bat` (Windows) are both setup scripts. They create the virtual environment and also install the required pip files
 
 ## 架構虛擬環境
 
-在cmd中進入目標資料夾
-
-virtualenv 子資料夾 (這個子資料夾的名稱就自己去取，會作為你之後虛擬環境的名稱)
-
-會生成一個子資料夾作為虛擬環境
-
+1. 在cmd中進入目標資料夾
+2. virtualenv 子資料夾 (這個子資料夾的名稱就自己去取，會作為你之後虛擬環境的名稱)
+3. 會生成一個子資料夾作為虛擬環境
+4. workon 子資料夾
 
 ## 使用虛擬環境
 
 ```bash
 workon 子資料夾
+
+cd <dir>
+
+# Creating a virtual environment
+virtualenv . # You could either do it the virtualenv way
+python -m venv . # Or use python's own venv environment
+
+# Activating the virtual environment
+Scripts\activate.bat # Windows
+source bin/activate # POSIX
+
+# Deactivating the virtual environment
+deactivate
 ```
 
 if you're on the server, use
@@ -68,6 +79,7 @@ source bin/activate
 ```bash
 pip install Flask 
 ```
+
 ### Bootstrap-Flask
 
 前端用，不安裝也可以(要把code中bootstrap的部分刪除掉)
@@ -88,3 +100,13 @@ Google的 Text to Speech API，其他可以用的有Microsoft Azure等等
 netstat -npl
 nohup program --host=0.0.0.0 &
 ```
+### Requests
+
+```bash
+
+pip install --upgrade requests
+
+```
+
+To POST the requests in SOAP format for RACE server. 
+

@@ -6,6 +6,9 @@ import platform
 import json
 from werkzeug.utils import secure_filename
 from google.cloud import texttospeech
+import requests
+import xml.etree.ElementTree as ET
+import PostSoap as ps
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
@@ -34,6 +37,34 @@ def OTA():
 @app.route('/OTS')
 def OTS():
     return render_template('OWLToSpeech.html')
+
+
+@app.route('/TTR')
+def TTR():
+    return render_template('TextToRace.html')
+
+
+@app.route('/TTRA', methods=['POST'])
+def PostToRace():
+    if request.method == 'POST':
+        axioms = request.values['axioms']
+        query = request.values['query']
+        UseCase = request.values['UseCase']
+
+        url = "http://attempto.ifi.uzh.ch/ws/race/racews.perl"
+        headers = {'content-type': 'application/soap+xml'}
+        # headers = {'content-type': 'text/xml'}
+        # !Use the above if somehow the above^2 doesn't work
+
+        body = ps.MessageForPost(UseCase, axioms, query)
+        response = requests.post(url, data=body, headers=headers)
+        print(response.text)
+        runtime, message, reason = ps.DecypherResponse(response.text, UseCase)
+    return jsonify(
+        runtime=runtime,
+        message=message,
+        reason=reason
+    )
 
 
 @app.route('/savetxt', methods=['POST'])

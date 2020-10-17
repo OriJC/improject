@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}TextToRace{% endblock title %}
+
+{% block content %}
+
+
+<script type=text/javascript src="{{url_for('static', filename='js/submit_post.js')}}"></script>
+<script type=text/javascript src="{{url_for('static', filename='js/reset.js')}}"></script>
+
+<div id="ttrpart">
+    <div class="d-sm-flex flex-wrap">
+        <div class="flex-column- flex-fill" style="padding: 0.25em;">
+            <label for="axioms">Type in the axioms</label><br>
+            <textarea class="form-control" id="axioms" rows="20">Input...</textarea>
+        </div>
+        <div class="flex-column- flex-fill" style="padding: 0.25em;">
+            <label for="query">Type in the query</label><br>
+            <textarea class="form-control" id="query" rows="20">Input...</textarea>
+        </div>
+    </div>
+    <select id="UseCase" class="dropdown">
+        <option value="check_consistency" class="dropdown-item">Check Consistency</option>
+        <option value="prove" class="dropdown-item">Prove</option>
+        <option value="answer_query" class="dropdown-item">Query</option>
+    </select>
+
+    <button id="ttr" class="btn btn-primary" onclick="submit_post();">Text to race</button>
+    <button id="delete" class="btn btn-secondary" onclick="reset();">Reset</button>
+</div>
+
+{% endblock content %}
