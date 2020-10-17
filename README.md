@@ -98,8 +98,11 @@ Google的 Text to Speech API，其他可以用的有Microsoft Azure等等
 
 ```bash
 netstat -npl
-nohup program --host=0.0.0.0 &
+nohup <program> --host=0.0.0.0 &
 ```
+
+replace `<program>` with the application of desire, in our case, `python3 app.py`
+
 ### Requests
 
 ```bash

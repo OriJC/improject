@@ -20,7 +20,7 @@ function submit_post() {
         Accept the data output and print it at the bottom of the page
         */
         output = reset_output();
-        runtime = create_list_item("Runtime: " + data['runtime']);
+        runtime = create_list_item("Runtime: " + data['runtime'] + " second(s)");
         message = create_list_item("Message: " + data['message']);
         output.appendChild(runtime);
         output.appendChild(message);
@@ -73,8 +73,6 @@ function submit_post() {
                 /* |- reason
                  *    |- reason_nodes 1
                  */
-                title_for_reason = create_list_item('Reasons:', bold = true);
-                output.append(title_for_reason);
                 reason_list.forEach(function (item, index, array) {
                     reason_nodes = create_list_item(item);
                     reason.append(reason_nodes);

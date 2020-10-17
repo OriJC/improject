@@ -61,13 +61,26 @@ def DecypherResponse(response, use_case):
             that has the reason for said message 
     '''
     root = ET.fromstring(response)
-    reply = (root[0])[0] # Get the <race:Reply> tag from RACE
+    reply = (root[0])[0]  # Get the <race:Reply> tag from RACE
     runtime = reply.find('race:Runtime', ns).text
     message, reason = "", []
 
+    '''
+    TODO
+    - error handling, ex. multiple
+    <race:Message>
+        <race:Importance>error</race:Importance>
+        <race:Type>race</race:Type>
+        <race:SentenceID></race:SentenceID>
+        <race:Subject>Axioms cannot be parsed.</race:Subject>
+        <race:Description>Correct the axioms.</race:Description>
+    </race:Message>
+    inside of reply
+    '''
+
     if use_case == "check_consistency":
         inconsistent_axioms = []
-        proofs = reply.find('race:Proof', ns) 
+        proofs = reply.find('race:Proof', ns)
 
         if proofs is None:
             message = "Consistent"
