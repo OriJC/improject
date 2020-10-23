@@ -19,6 +19,49 @@ ns = {
     'race': "http://attempto.ifi.uzh.ch/race"
 }
 
+def remove_same_sentence(sentences):
+    '''
+    @param: <list> of sentences
+    @return: <list>
+    {empty list | list is empty}
+    {original list | only one object}
+    {list with unique objects | otherwise} 
+    ''' 
+    if len(sentences) == 0:
+        return []
+    elif len(sentences) == 1:
+        return sentences
+    else:
+        return list(dict.fromkeys(sentences))
+
+def query_to_conclusion(query, changes):
+    '''
+    @param:
+    - query: <str>
+    - conclusion: <list>
+    @return: <list> of <str>
+    '''
+    conclusion = []
+
+    # Creating all the tails of the conclusion
+    # TODO: Handle more types of substitution
+    query = query.lower().replace('?', '.')
+    if query.find("is somebody who") == 0:
+        answer_tail = query.replace("is somebody who", '')
+    elif query.find("who") == 0:
+        answer_tail = query.replace("who", '')
+
+    # Remove all the "... (at least x) ..."
+    # Place the answer_tail into conclusion
+    for change in changes:
+        if change.find("(at least ") == -1:
+            change_split = change.split()
+            target = change_split[len(change_split) - 1]
+            conclusion.append(target + answer_tail)
+            
+    # Return list
+    return conclusion
+
 
 def MessageForPost(action, story, query=None):
     '''
@@ -51,7 +94,7 @@ def MessageForPost(action, story, query=None):
     return post
 
 
-def DecypherResponse(response, use_case):
+def DecypherResponse(response, use_case, query):
     '''
     Inputs the string value of the xml message
     Outputs:
@@ -61,13 +104,48 @@ def DecypherResponse(response, use_case):
             that has the reason for said message 
     '''
     root = ET.fromstring(response)
-    reply = (root[0])[0] # Get the <race:Reply> tag from RACE
-    runtime = reply.find('race:Runtime', ns).text
-    message, reason = "", []
+    reply = (root[0])[0]  # Get the <race:Reply> tag from RACE
+    runtime, message, reason, conclusion = '0', "", [], []
+    if reply.find('race:Runtime', ns) is not None:
+        runtime = reply.find('race:Runtime', ns).text
 
-    if use_case == "check_consistency":
+    if reply.find('race:Message', ns) is not None:
+        '''
+        error handling
+        ---
+        the error would normally accompany with the <race:Message> tag
+        '''
+        message_tag = reply.findall('race:Message', ns)
+
+        if len(message_tag) == 1:
+            '''
+            if there is only one message
+            '''
+            errors = reply.find('race:Message', ns)
+            message = "Message (Probably should fix it)"
+            reason.append(errors.find('race:Importance', ns).text.upper() + ": " + errors.find('race:Type', ns).text)
+            if errors.find('race:SentenceID', ns).text is not None:
+                reason.append("Sentence ID: " + errors.find('race:SentenceID', ns).text)
+            reason.append("Subject: " + errors.find('race:Subject', ns).text)
+            reason.append("Description: " + errors.find('race:Description', ns).text)
+        else:
+            '''
+            if there are multiple messages
+            '''
+            message = "Multiple messages (Probably should fix them)"
+            message_tag = reply.findall('race:Message', ns)
+            for each_message in message_tag:
+                message_box = []
+                message_box.append(each_message.find('race:Importance', ns).text.upper() + ": " + each_message.find('race:Type', ns).text)
+                if each_message.find('race:SentenceID', ns).text is not None:
+                    message_box.append("Sentence ID: " + each_message.find('race:SentenceID', ns).text)
+                message_box.append("Subject: " + each_message.find('race:Subject', ns).text)
+                message_box.append("Description: " + each_message.find('race:Description', ns).text)
+                reason.append(message_box)
+
+    elif use_case == "check_consistency":
         inconsistent_axioms = []
-        proofs = reply.find('race:Proof', ns) 
+        proofs = reply.find('race:Proof', ns)
 
         if proofs is None:
             message = "Consistent"
@@ -106,7 +184,11 @@ def DecypherResponse(response, use_case):
                 reason.append(axiom_combo)
 
     elif use_case == "answer_query":
+        '''
+        let substitution happen automatically
+        '''
         proofs = reply.findall('race:Proof', ns)
+        changes = []
         if len(proofs) == 0:
             message = "Cannot be answered"
             reason_not = reply.find("race:WhyNot", ns)
@@ -119,6 +201,12 @@ def DecypherResponse(response, use_case):
                 axiom_combo = []
                 for axioms in used_axioms:
                     axiom_combo.append(axioms.text)
+                    if axioms.text.find("Substitution:") == 0:
+                        # Provide automatic substitution
+                        changes.append(axioms.text)
                 reason.append(axiom_combo)
+            changes = remove_same_sentence(changes)
+            ''' add sub fx '''
+            conclusion = query_to_conclusion(query, changes)
 
-    return runtime, message, reason
+    return runtime, message, reason, conclusion

@@ -2,6 +2,8 @@ Every man is a human.
 Every woman is a human.
 Mary is a woman.
 John is a man.
+Mark is a man.
+John is not Mark.
 
 Who is a man and is a human?
 Is somebody who is a man a human?

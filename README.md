@@ -98,10 +98,11 @@ Google的 Text to Speech API，其他可以用的有Microsoft Azure等等
 
 ```bash
 netstat -npl
-nohup program --host=0.0.0.0 &
+nohup <program> --host=0.0.0.0 &
 ```
 
-在app.py中的asd.json是Google api的連結金鑰，因為有資安的問題所以沒有放到github這邊來，因此可能需要去GCP申請一個帳戶和key，才可以使用到
+- 在app.py中的asd.json是Google api的連結金鑰，因為有資安的問題所以沒有放到github這邊來，因此可能需要去GCP申請一個帳戶和key，才可以使用到
+- replace `<program>` with the application of desire, in our case, `python3 app.py`
 
 ### Requests
 

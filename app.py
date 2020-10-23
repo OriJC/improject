@@ -44,7 +44,7 @@ def TTR():
     return render_template('TextToRace.html')
 
 
-@app.route('/TTRA', methods=['POST'])
+@app.route('/TTR', methods=['POST'])
 def PostToRace():
     if request.method == 'POST':
         axioms = request.values['axioms']
@@ -59,11 +59,13 @@ def PostToRace():
         body = ps.MessageForPost(UseCase, axioms, query)
         response = requests.post(url, data=body, headers=headers)
         print(response.text)
-        runtime, message, reason = ps.DecypherResponse(response.text, UseCase)
+        runtime, message, reason, conclusion = ps.DecypherResponse(
+            response.text, UseCase, query)
     return jsonify(
         runtime=runtime,
         message=message,
-        reason=reason
+        reason=reason,
+        conclusion=conclusion
     )
 
 
@@ -141,7 +143,7 @@ def applic(message, filename):
     with open(f'./static/{filename}.mp3', 'wb') as out:
         out.write(response.audio_content)
         print('Audio content written to file "output.mp3"')
-    return send_file('./static/output.mp3', attachment_filename=f'{filename}.mp3')
+    return send_file(f'./static/{filename}.mp3', attachment_filename=f'{filename}.mp3')
 
 
 @app.route('/deleteText', methods=['POST'])
