@@ -23,15 +23,10 @@ exec_head = "./" if platform.system() != "Windows" else ""
 def home():
     return render_template('index.html')
 
-@app.route('/TTS', methods=["POST", "GET"])
+
+@app.route('/TTS')
 def TTS():
-    if request.method == "POST":
-        text = request.values['conclusion']
-        print("!!POST----" + text)
-    else:
-        text = request.args.get('conclusion', "Waiting for the input....")
-        print("!!GET-----" + text)
-    return render_template('TextToSpeech.html', textarea=text)
+    return render_template('TextToSpeech.html')
 
 
 @app.route('/OTA')
@@ -64,7 +59,8 @@ def PostToRace():
         body = ps.MessageForPost(UseCase, axioms, query)
         response = requests.post(url, data=body, headers=headers)
         print(response.text)
-        runtime, message, reason, conclusion = ps.DecypherResponse(response.text, UseCase, query)
+        runtime, message, reason, conclusion = ps.DecypherResponse(
+            response.text, UseCase, query)
     return jsonify(
         runtime=runtime,
         message=message,
@@ -72,12 +68,6 @@ def PostToRace():
         conclusion=conclusion
     )
 
-@app.route('/TTR-redirect', methods=['POST'])
-def redirect_to_tts():
-    conclusions = ''
-    if request.method == 'POST':
-        conclusions = request.values['conclusion']
-    return redirect(url_for('/TTS', conclusion=conclusions))
 
 @app.route('/savetxt', methods=['POST'])
 def savetxt():
@@ -153,7 +143,7 @@ def applic(message, filename):
     with open(f'./static/{filename}.mp3', 'wb') as out:
         out.write(response.audio_content)
         print('Audio content written to file "output.mp3"')
-    return send_file('./static/output.mp3', attachment_filename=f'{filename}.mp3')
+    return send_file(f'./static/{filename}.mp3', attachment_filename=f'{filename}.mp3')
 
 
 @app.route('/deleteText', methods=['POST'])
