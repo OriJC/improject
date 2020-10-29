@@ -19,7 +19,7 @@ ns = {
     'race': "http://attempto.ifi.uzh.ch/race"
 }
 
-def remove_same_sentence(sentences):
+def remove_same_sentence(sentences: list) -> list:
     '''
     @param: <list> of sentences
     @return: <list>
@@ -34,7 +34,7 @@ def remove_same_sentence(sentences):
     else:
         return list(dict.fromkeys(sentences))
 
-def query_to_conclusion(query, changes):
+def query_to_conclusion(query: str, changes: list) -> list:
     '''
     @param:
     - query: <str>
@@ -63,7 +63,7 @@ def query_to_conclusion(query, changes):
     return conclusion
 
 
-def MessageForPost(action, story, query=None):
+def MessageForPost(action: str, story: str, query: str=None) -> str:
     '''
     Generate the POST message required
     '''
@@ -94,7 +94,7 @@ def MessageForPost(action, story, query=None):
     return post
 
 
-def DecypherResponse(response, use_case, query):
+def DecypherResponse(response: str, use_case: str, query: str):
     '''
     Inputs the string value of the xml message
     Outputs:
