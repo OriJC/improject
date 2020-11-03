@@ -41,12 +41,14 @@ def OTS():
 
 @app.route('/TTR')
 def TTR():
+    # render the template texttorace.html
     return render_template('TextToRace.html')
 
 
 @app.route('/TTR', methods=['POST'])
 def PostToRace():
     if request.method == 'POST':
+        # get the values that are being posted
         axioms = request.values['axioms']
         query = request.values['query']
         UseCase = request.values['UseCase']
@@ -56,9 +58,12 @@ def PostToRace():
         # headers = {'content-type': 'text/xml'}
         # !Use the above if somehow the above^2 doesn't work
 
+        # prepare the message to be posted to RACE server
         body = ps.MessageForPost(UseCase, axioms, query)
+        # posting the data and accepting the response with variable 'response'
         response = requests.post(url, data=body, headers=headers)
         print(response.text)
+        # get the runtime, message etc. from xml response
         runtime, message, reason, conclusion = ps.DecypherResponse(
             response.text, UseCase, query)
     return jsonify(
