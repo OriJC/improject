@@ -34,11 +34,6 @@ function create_parent_item(element_type, id, class_type){
     return node;
 }
 
-function insertAfter(newNode, existingNode) {
-    /* Insert object after existingNode */
-    existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
-}
-
 function submit_post() {
     /* Get the values in textarea and button */
     var axioms = document.getElementById("axioms").value;

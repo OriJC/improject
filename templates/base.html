@@ -7,8 +7,11 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="shortcut icon" href="{{ url_for('static', filename='icon/favicon.ico') }}">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	{{bootstrap.load_css()}}
-	{% block styles %}{% endblock styles%}
+	{% block styles %}
+		{{ bootstrap.load_css() }}
+	{% endblock styles%}
+	{% block head %}
+	{% endblock head %}
 </head>
 
 <body>
@@ -28,17 +31,19 @@
 				<li class="nav-item">
 					<a class="nav-link" href="{{url_for('TTR')}}">Text to Race</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{url_for('speech_to_text')}}">Speech to text</a>
+				</li>
 			</ul>
 		</div>
 	</nav>
 	<div style="padding:1em;">
 		{% block content %}{% endblock content %}
 	</div>
-	<script>
-		{% block scripts %}
-		{ { bootstrap.load_js() } }
-		{% endblock scripts %}
-	</script>
+	{% block scripts %}
+		<!-- Optional JavaScript -->
+		{{ bootstrap.load_js() }}
+	{% endblock %}
 </body>
 
 </html>

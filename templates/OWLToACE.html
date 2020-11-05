@@ -12,6 +12,7 @@
 {% endblock content %}
 
 {% block scripts %}
+<script>
 	var fname=[];
 	function uploadowl(){
 		var story = document.getElementById("story").files[0];
@@ -47,4 +48,5 @@
 			console.log('Upload failed');
 		});
 	}
+</script>
 {% endblock scripts %}

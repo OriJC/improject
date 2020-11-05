@@ -157,5 +157,16 @@ def deleteText():
     return jsonify({'text': "File removed!"})
 
 
+@app.route('/speech-to-text', methods=['GET', 'POST'])
+def speech_to_text():
+    '''
+    get the speech file, send to various speech servers and return text
+    '''
+    if request.method == 'GET':
+        return render_template("speech_to_text.html")
+    if request.method == 'POST':
+        pass
+
+
 if __name__ == '__main__':
     app.run(debug=True)

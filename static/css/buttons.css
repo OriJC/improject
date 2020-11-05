@@ -1,3 +1,16 @@
 button.btn {
-    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+button.btn-block {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+div.row {
+    margin-top: 1em;
+}
+
+select.dropdown {
+    margin-right: 0.5em;
 }
