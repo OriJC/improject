@@ -4,11 +4,23 @@ import os
 import subprocess
 import platform
 import json
+import wave
+import os
+import ssl
 from werkzeug.utils import secure_filename
 from google.cloud import texttospeech
 import requests
 import xml.etree.ElementTree as ET
 import PostSoap as ps
+import web_recognize
+import final_result
+import globalvar as gl
+import weight #deprecated
+import use_reasoner
+from decimal import Decimal
+
+os.chdir(os.path.dirname(os.path.realpath(__file__)))
+ssl._create_default_https_context = ssl._create_unverified_context
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
@@ -16,6 +28,30 @@ bootstrap = Bootstrap(app)
 app.secret_key = 'example key'
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'asd.json'
 exec_head = "./" if platform.system() != "Windows" else ""
+
+def safe_base64_decode(base64str):
+	import base64
+	if len(base64str) % 4 == 0:
+		decode_base64str = base64.urlsafe_b64decode(base64str)
+		return decode_base64str
+	else:
+		decode_base64str = base64.urlsafe_b64decode(base64str + '=' * (4-len(base64str) % 4))
+		return decode_base64str
+
+def make_wav_file(fname, decode_base64str):
+	dirName = 'audios'
+	if not os.path.exists(dirName):
+		os.mkdir(dirName)
+
+	channels = 2
+	sampwidth = 2
+	rate = 44100   
+	
+	with wave.open(f'./{dirName}/{fname}', 'wb') as wavefile:
+		wavefile.setnchannels(channels)
+		wavefile.setsampwidth(sampwidth)
+		wavefile.setframerate(rate)
+		wavefile.writeframes(decode_base64str)
 
 
 @app.route('/')
@@ -166,6 +202,45 @@ def speech_to_text():
         return render_template("speech_to_text.html")
     if request.method == 'POST':
         pass
+
+@app.route('/upload', methods=['POST'])
+def upload():
+	fname = request.form.get('fname')
+	blob = request.form.get('data')[22:]
+
+	decode_blob = safe_base64_decode(blob)
+	make_wav_file(fname, decode_blob)
+
+	return ""
+
+@app.route('/recog', methods=['POST'])
+def recog():
+	fname = request.form.get('fname')
+	weight = [Decimal(i) for i in request.form.get('weight').split(',')]
+	threshold = Decimal(request.form.get('threshold'))
+	use_stem = (request.form.get('use_stem') == 'T')
+	lowercast = (request.form.get('lowercast') == 'T')
+	way = request.form.get('way')
+	results, no_exception, exceed_quota = web_recognize.recognize('./audios/' + fname)
+	if no_exception == True:
+		alignment, recommendation = final_result.to_final_result(results, weight, threshold, way = way, use_stem = use_stem, lowercast = lowercast)
+		dic = {"results":results, "no_exception":no_exception, "exceed_quota":exceed_quota, "alignment":alignment, "recommendation":recommendation}
+	else:
+		if exceed_quota == True:
+			results = results[:-1]
+			alignment, recommendation = final_result.to_final_result(results, weight, threshold, way = way, use_stem = use_stem, lowercast = lowercast)
+			dic = {"results":results, "no_exception":no_exception, "exceed_quota":exceed_quota, "alignment":alignment, "recommendation":recommendation}
+		else:
+			dic = {"no_exception":no_exception}
+	return jsonify(dic)
+
+@app.route('/deleteAudios', methods=['POST'])
+def deleteAudios():
+	fnames = request.form.getlist('fnames')
+	for fname in fnames:
+		os.remove('./audios/' + fname)
+	return ""
+
 
 
 if __name__ == '__main__':

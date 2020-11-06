@@ -3,3 +3,4 @@ wheel
 google-cloud-texttospeech 
 flask 
 Bootstrap-Flask
+numpy

@@ -3,6 +3,10 @@
 
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
+<style type='text/css'>
+    ul { list-style: none; }
+    #recordingslist audio { display: block; margin-bottom: 10px; }
+</style>
 {% endblock head %}
 {% block content %}
 
@@ -13,14 +17,10 @@
         <button type="button" class="btn btn-primary" id="recognise-button" onclick="#" disabled>Recognise</button>
     </div>
     <div class="row">
-        <div class="card" style="width: 100%">
-            <div class="card-header">
-                Status
-            </div>
-            <div class="card-body">
-                <p class="card-text">Nothing has been done yet. Try recording something!</p>
-            </div>
-        </div>
+        <h2>Recordings</h2>
+    </div>
+    <div clas="row">
+        <ul id="recordingslist"></ul>
     </div>
 </div>
 
@@ -29,9 +29,12 @@
 {% endblock content %}
 
 {% block script %}
+{% endblock script %}
+
+{% block tail %}
 <!--adding the text/javascript to this page-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type=text/javascript src="{{url_for('static', filename='js/common.js')}}"></script>
 <script type=text/javascript src="{{url_for('static', filename='js/speech_to_text.js')}}"></script>
 <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
-{% endblock script%}
+{% endblock tail %}
