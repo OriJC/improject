@@ -10,3 +10,5 @@ nohup.out
 asd.json
 *.mp3
 *.pdf
+.vscode
+env/
