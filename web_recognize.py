@@ -34,29 +34,29 @@ def recognize(AudioFile):
 			if google_result == '':
 				no_exception = False
 				google_result = "Exception: google cannot recognize!"
-				#print(google_result)
+				print(google_result)
 			else:
-				#print("google : ", google_result)
+				print("google : ", google_result)
 				pass
 		except:
 			no_exception = False
 			google_result = "Exception: google cannot recognize!"
-			#print(google_result)
-
+			print(google_result)
+		'''
 		try:
 			#password:b04@NTUIM,有language參數(沒有zh-TW)
 			ibm_result = r.recognize_ibm(audio,username=ibm_username,password=ibm_password,language='en-US')
 			if ibm_result == '':
 				no_exception = False
 				ibm_result = "Exception: ibm cannot recognize!"
-				#print(ibm_result)
+				print(ibm_result)
 			else:
-				#print("ibm : ", ibm_result)
+				print("ibm : ", ibm_result)
 				pass
 		except:
 			no_exception = False
 			ibm_result = "Exception: ibm cannot recognize!"
-			#print(ibm_result)
+			print(ibm_result)
 			
 		try:
 			#在網頁裡面改語言
@@ -64,14 +64,14 @@ def recognize(AudioFile):
 			if wit_result == '':
 				no_exception = False
 				wit_result = "Exception: wit cannot recognize!"
-				#print(wit_result)
+				print(wit_result)
 			else:
-				#print("wit : ", wit_result)
+				print("wit : ", wit_result)
 				pass
 		except:
 			no_exception = False
 			wit_result = "Exception: wit cannot recognize!"
-			#print(wit_result)
+			print(wit_result)
 
 		try:
 			#每日限額100單位,沒有language參數
@@ -79,18 +79,19 @@ def recognize(AudioFile):
 			if houndify_result == '':
 				no_exception = False
 				houndify_result = "Exception: houndify cannot recognize!"
-				#print(houndify_result)
+				print(houndify_result)
 			else:
-				#print("houndify : ", houndify_result)
+				print("houndify : ", houndify_result)
 				pass
 		except:
 			if no_exception == True:
 				exceed_quota = True
 			no_exception = False
 			houndify_result = "Exception: houndify cannot recognize!"
-			#print(houndify_result)
-
+			print(houndify_result)
+		'''
 		#print("-------------------------------")
-		results = [google_result, ibm_result, wit_result, houndify_result]
+		results = [google_result]
+		# results = [google_result, ibm_result, wit_result, houndify_result]
 		store_result[AudioFile] = results, no_exception, exceed_quota
 		return results, no_exception, exceed_quota

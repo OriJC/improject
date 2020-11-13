@@ -223,12 +223,14 @@ def recog():
 	way = request.form.get('way')
 	results, no_exception, exceed_quota = web_recognize.recognize('./audios/' + fname)
 	if no_exception == True:
-		alignment, recommendation = final_result.to_final_result(results, weight, threshold, way = way, use_stem = use_stem, lowercast = lowercast)
+		alignment, recommendation = results[0], results[0]
+        # final_result.to_final_result(results, weight, threshold, way = way, use_stem = use_stem, lowercast = lowercast)
 		dic = {"results":results, "no_exception":no_exception, "exceed_quota":exceed_quota, "alignment":alignment, "recommendation":recommendation}
 	else:
 		if exceed_quota == True:
 			results = results[:-1]
-			alignment, recommendation = final_result.to_final_result(results, weight, threshold, way = way, use_stem = use_stem, lowercast = lowercast)
+			alignment, recommendation = results[0], results[0]
+            # final_result.to_final_result(results, weight, threshold, way = way, use_stem = use_stem, lowercast = lowercast)
 			dic = {"results":results, "no_exception":no_exception, "exceed_quota":exceed_quota, "alignment":alignment, "recommendation":recommendation}
 		else:
 			dic = {"no_exception":no_exception}
