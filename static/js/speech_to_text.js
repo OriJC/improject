@@ -1,3 +1,24 @@
+var num_of_API = 4;
+var weight_tuning = document.getElementById("weight");
+for(var i = 0;i < num_of_API;i++){
+  var node = document.createElement("input");
+  node.setAttribute("id", "weight" + i);
+  node.setAttribute("type", "number");
+  node.setAttribute("value", 1);
+  node.setAttribute("style", "width:50px");
+  node.required = true;
+  weight_tuning.appendChild(node);
+}
+
+var ways = ['james', 'wayne'];
+var ways_node = document.getElementById("ways");
+for(var i = 0;i < ways.length;i++){
+  var node = document.createElement("option");
+  node.setAttribute("value", ways[i]);
+  node.appendChild(document.createTextNode(ways[i]));
+  ways_node.appendChild(node);
+}
+
 var audio_context;
 var recorder;
 var fnames = [];

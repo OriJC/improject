@@ -15,7 +15,7 @@ ape_command = lambda filename: [ape, '-file', filename, '-solo', 'owlxml']
 owl_to_ace_command = lambda filename: [owl_to_ace, '-xml', filename]
 
 plat = platform.system()
-exe_tail = '.exe' if plat == 'Windows' else ''
+exe_tail = '.exe'
 
 if not os.path.exists(reasoner):
 	print("Cannot find reasoner.")

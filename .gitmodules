@@ -3,4 +3,4 @@
 	url = https://github.com/Kaljurand/owl-verbalizer
 [submodule "APE"]
 	path = APE
-	url = git@github.com:Attempto/APE.git
+	url = https://github.com/Attempto/APE

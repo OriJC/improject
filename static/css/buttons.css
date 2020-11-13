@@ -14,3 +14,7 @@ div.row {
 select.dropdown {
     margin-right: 0.5em;
 }
+
+textarea.form-control {
+    margin-top: 1em;
+}
