@@ -8,7 +8,9 @@ __pycache__
 *.exe
 nohup.out
 asd.json
+API_keys.py
 *.mp3
 *.pdf
+audios
 .vscode
-env/
+env

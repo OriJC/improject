@@ -1,100 +1,71 @@
-# improject
-以下大部分的過程都在window 10的環境中進行，其他os可能操作和code上會有點不一樣
+# 福爾摩斯-推論機器人
 
-Python 需要3.7以後的版本 (因為3.7 subprocess.run 有新增 capture_output)
+我們是一群資管大四的專題學生，以下是我們的Code
 
-## Submodules <owl-verbalizer>
+> 以下大部分的過程都在window 10的環境中進行，其他os可能操作和code上會有點不一樣。Python 需要3.7以後的版本 (因為3.7 subprocess.run 有新增 capture_output)
 
-This submodule is used for the recompilation of `owl_to_ace.exe` if it doesn't work. You could go into the directory and then use the makefile to compile it. Remember to get `SWI-Prolog` installed on your system before compiling. When **git cloning** this repository, you could use
-
-```bash
-git clone --recurse-submodule <url> # or the below
-git clone --recursive <url>
-```
-
-to save the process of doing the process down the line
+## 虛擬環境
 
 ```bash
-git submodule update --init
-```
-
-and to compile the `owl_to_ace.exe` file, just type
-
-```bash
-sh make_exe.sh
-```
-
-if you're in a Linux server environment using bash and move it to the outer file by
-
-```bash
-mv owl_to_ace.exe ..
-```
-
-## 安裝虛擬環境
-
-```bash
-pip install virtualenv # optional if you want to use virtualenv
-```
-
-`setup.sh` (Mac OS, Linux, BSD) and `setup.bat` (Windows) are both setup scripts. They create the virtual environment and also install the required pip files
-
-## 架構虛擬環境
-
-1. 在cmd中進入目標資料夾
-2. virtualenv 子資料夾 (這個子資料夾的名稱就自己去取，會作為你之後虛擬環境的名稱)
-3. 會生成一個子資料夾作為虛擬環境
-4. workon 子資料夾
-
-## 使用虛擬環境
-
-```bash
-workon 子資料夾
-
-cd <dir>
-
 # Creating a virtual environment
-virtualenv . # You could either do it the virtualenv way
-python -m venv . # Or use python's own venv environment
+python -m venv env
 
 # Activating the virtual environment
-Scripts\activate.bat # Windows
-source bin/activate # POSIX
+Scripts\env\activate.bat # Windows
+source env/bin/activate # POSIX
 
 # Deactivating the virtual environment
 deactivate
 ```
 
-if you're on the server, use
-
-```bash
-source bin/activate
-```
+`setup.sh` (Mac OS, Linux, BSD) and `setup.bat` (Windows) are both setup scripts. They create the virtual environment and also install the required pip files
 
 ## 安裝套件
 
-大部分的套件直接用 pip 就可以安裝好
+在使用之前需要安裝一些套間
 
-### Flask 
+### Python 套件
 
-```bash
-pip install Flask 
-```
-
-### Bootstrap-Flask
-
-前端用，不安裝也可以(要把code中bootstrap的部分刪除掉)
-
-Flask另外有一個叫Flask-Bootstrap的套件，不過很久沒有更新，安裝時不要安裝錯
-
-### GCP Text-to-Speech
+- Flask
+- Bootstrap-Flask: Flask另外有一個叫Flask-Bootstrap的套件，不過很久沒有更新，安裝時不要安裝錯
+- google-cloud-texttospeech: Google的 Text to Speech API，其他可以用的有Microsoft Azure等等
+- requests: To POST the requests in SOAP format for RACE server
 
 ```bash
-pip install --upgrade google-cloud-texttospeech
+pip install -r .\requirements.txt # Windows
+pip install -r requirements.txt   # Linux
 ```
- 
-Google的 Text to Speech API，其他可以用的有Microsoft Azure等等
 
-### server用cmd
+### 其他軟體
+
+- swi-prolog: 這個是拿來compile `owl_to_ace.exe` 用的，Windows可以通過[這個鏈接](https://www.swi-prolog.org/) 來安裝，Linux則可以到repositopry裡面找 (Ubuntu的話是 `swi-prolog`)
+- owl_to_ace.exe 和 ape.exe： 自己需要去compile，可以通過 `APE/` 和 `owl-verbalizer/` 編譯獲得, 這個會在 `use_reasoner.py` 用到
+
+```bash
+# changing directory
+cd .\APE\ # windows
+cd APE/   # linux
+
+# compile ape.exe
+make_exe.bat # windows
+make install # linux
+
+# compile owl-verbalizer
+make_exe.bat    # windows
+sh make_exe.sh  # linux
+```
+
+## 啟動
+
+這個程式在啟動的時候，請進入虛擬環境，在Command Line輸入 
+
+```bash
+flask run
+```
+
+就可以啟動Flask後端，在瀏覽器打 `127.0.0.1：5000` 即可使用。如若是要進行開發，建議使用Development Mode並且瀏覽器設定不存取Cache。
+
+## server用cmd
 
 ```bash
 netstat -npl
@@ -103,11 +74,3 @@ nohup <program> --host=0.0.0.0 &
 
 - 在app.py中的asd.json是Google api的連結金鑰，因為有資安的問題所以沒有放到github這邊來，因此可能需要去GCP申請一個帳戶和key，才可以使用到
 - replace `<program>` with the application of desire, in our case, `python3 app.py`
-
-### Requests
-
-```bash
-pip install --upgrade requests
-```
-
-To POST the requests in SOAP format for RACE server. 

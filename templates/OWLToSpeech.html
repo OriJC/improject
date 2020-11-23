@@ -24,7 +24,7 @@
 	</div>
 {% endblock content %}
 {% block scripts %}
-
+<script>
 	var fname=[];
 	function uploadowl(){
 		var story = document.getElementById("story").files[0];
@@ -101,4 +101,5 @@
 			localStorage.clear();
 			window.location.reload();
 		}
+</script>
 {% endblock scripts %}

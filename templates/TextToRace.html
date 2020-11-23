@@ -1,12 +1,11 @@
 {% extends "base.html" %}
 {% block title %}Text To Race{% endblock title %}
 
-{% block content %}
-
-<script type=text/javascript src="{{url_for('static', filename='js/send_tts.js')}}"></script>
-<script type=text/javascript src="{{url_for('static', filename='js/submit_post.js')}}"></script>
-<script type=text/javascript src="{{url_for('static', filename='js/reset.js')}}"></script>
+{% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
+{% endblock head %}
+
+{% block content %}
 
 <div id="ttrpart">
     <div class="d-sm-flex flex-wrap">
@@ -32,3 +31,10 @@
 </div>
 
 {% endblock content %}
+
+{% block script %}
+<script type=text/javascript src="{{url_for('static', filename='js/common.js')}}"></script>
+<script type=text/javascript src="{{url_for('static', filename='js/send_tts.js')}}"></script>
+<script type=text/javascript src="{{url_for('static', filename='js/submit_post.js')}}"></script>
+<script type=text/javascript src="{{url_for('static', filename='js/reset.js')}}"></script>
+{% endblock script %}
