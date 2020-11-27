@@ -39,9 +39,12 @@ pip install -r requirements.txt   # Linux
 ### 其他軟體
 
 - swi-prolog: 這個是拿來compile `owl_to_ace.exe` 用的，Windows可以通過[這個鏈接](https://www.swi-prolog.org/) 來安裝，Linux則可以到repositopry裡面找 (Ubuntu的話是 `swi-prolog`)
-- owl_to_ace.exe 和 ape.exe： 自己需要去compile，可以通過 `APE/` 和 `owl-verbalizer/` 編譯獲得, 這個會在 `use_reasoner.py` 用到
+- owl_to_ace.exe 和 ape.exe： 自己需要去compile，可以通過 `APE/` 和 `owl-verbalizer/` 編譯獲得, 這個會在 `use_reasoner.py` 用到。備註，如果你資料夾裡面沒有這兩個directory有可能是你沒有初始化這兩個submodule。
 
 ```bash
+# Get the submodules
+git submodule update --init --recursive
+
 # changing directory
 cd .\APE\ # windows
 cd APE/   # linux
