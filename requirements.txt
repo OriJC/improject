@@ -5,3 +5,7 @@ flask
 Bootstrap-Flask
 numpy
 SpeechRecognition
+pyswip
+networkx
+pynput
+pyaudio

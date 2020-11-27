@@ -24,12 +24,24 @@ deactivate
 
 在使用之前需要安裝一些套間
 
+### Linux specific
+
+For the installation of `pynput` and `pyaudio` down the line, we recommend that you install 
+
+- `python3-dev` (Debian) `python3-devel` (RHEL) 
+- `portaudio19-dev` (Debian) `portaudio-devel`(RHEL)
+
+from your repository. If you're on Arch or Gentoo, you probably know where to find :)
+
 ### Python 套件
 
-- Flask
+- Flask: Web backend
 - Bootstrap-Flask: Flask另外有一個叫Flask-Bootstrap的套件，不過很久沒有更新，安裝時不要安裝錯
 - google-cloud-texttospeech: Google的 Text to Speech API，其他可以用的有Microsoft Azure等等
-- requests: To POST the requests in SOAP format for RACE server
+- requests: To POST the requests in SOAP format for RACE server, used in `app.py`
+- pynuput: used in `speechToText.py`
+- pyaudio: used in `speechToText.py`
+- nltk *(suggested change)*: For the porter stemmer used in `string_align.py`, could be changed to using NLTK implementation in the future. For now, it's not.
 
 ```bash
 pip install -r .\requirements.txt # Windows
@@ -38,8 +50,9 @@ pip install -r requirements.txt   # Linux
 
 ### 其他軟體
 
-- swi-prolog: 這個是拿來compile `owl_to_ace.exe` 用的，Windows可以通過[這個鏈接](https://www.swi-prolog.org/) 來安裝，Linux則可以到repositopry裡面找 (Ubuntu的話是 `swi-prolog`)
-- owl_to_ace.exe 和 ape.exe： 自己需要去compile，可以通過 `APE/` 和 `owl-verbalizer/` 編譯獲得, 這個會在 `use_reasoner.py` 用到
+- `swi-prolog`: 這個是拿來編譯 `owl_to_ace.exe` 用的，Windows和Mac可以通過[這個鏈接](https://www.swi-prolog.org/) 來安裝，Linux則可以到repositopry裡面找 (Debian和Arch的話是 `swi-prolog`， RHEL的則是`pl`)
+- `owl_to_ace.exe` 和 `ape.exe`： 自己需要去compile，可以通過 `APE/` 和 `owl-verbalizer/` 編譯獲得, 這個會在 `use_reasoner.py` 用到
+- `java` and `javac`: would be needed for `use_reasoner.py` to compile and exceute the related Java files.
 
 ```bash
 # changing directory
@@ -63,7 +76,7 @@ sh make_exe.sh  # linux
 flask run
 ```
 
-就可以啟動Flask後端，在瀏覽器打 `127.0.0.1：5000` 即可使用。如若是要進行開發，建議使用Development Mode並且瀏覽器設定不存取Cache。
+就可以啟動Flask後端，在瀏覽器打 `127.0.0.1：5000` 即可使用。如若是要進行開發，建議使用Development Mode並且瀏覽器設定不存取Cache
 
 ## server用cmd
 

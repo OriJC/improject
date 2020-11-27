@@ -1,3 +1,5 @@
+"""Provides support for RACE messages"""
+
 import xml.etree.ElementTree as ET
 
 head = (

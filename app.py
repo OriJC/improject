@@ -5,12 +5,10 @@ import subprocess
 import platform
 import json
 import wave
-import os
 import ssl
 from werkzeug.utils import secure_filename
 from google.cloud import texttospeech
 import requests
-import xml.etree.ElementTree as ET
 import PostSoap as ps
 import web_recognize
 import final_result
