@@ -1,4 +1,5 @@
 from pynput.keyboard import Key, KeyCode, Listener
+import speech_recognition as sr
 import string_align
 import pyaudio
 import wave
@@ -9,11 +10,13 @@ import final_result
 import os
 import weight
 
-ibm_username = gl.get_value("ibm_username")
-ibm_password = gl.get_value("ibm_password")
+ibm_key =gl.get_value("ibm_key")
+ibm_URL =gl.get_value("ibm_URL")
+ibm_username =gl.get_value("ibm_username")
+ibm_password =gl.get_value("ibm_password")
 wit_key = gl.get_value("wit_key")
-houndify_id = gl.get_value("houndify_id")
-houndify_key = gl.get_value("houndify_key")
+houndify_id =  gl.get_value("houndify_id")
+houndify_key =  gl.get_value("houndify_key")
 
 weight = gl.get_value("weight")
 threshold = gl.get_value("threshold")
@@ -144,32 +147,26 @@ class RecordingFile(Listener):
                 google_result = "Exception: google cannot recognize!"
                 print(google_result)
 
-#            try:
-                #7天試用,有language參數
-#                bing_result = r.recognize_bing(audio,key="a6182cf9927b484ba3c5508dcf5d6a77",language='en-US')
-#                print("bing : ", bing_result)
-#            except:
-#                bing_result = "Exception: bing cannot recognize!"
-#                print(bing_result)
-                
-            try:
-                #password:b04@NTUIM,有language參數(沒有zh-TW)
-                ibm_result = r.recognize_ibm(audio,username=ibm_username,password=ibm_password,language='en-US')
-                if ibm_result == '':
-                    self.no_exception = False
-                    ibm_result = "Exception: ibm cannot recognize!"
-                    print(ibm_result)
-                else:
-                    print("ibm : ", ibm_result)
-            except:
-                self.no_exception = False
-                ibm_result = "Exception: ibm cannot recognize!"
-                print(ibm_result)
-                
+            #用try寫不出來
+            #會回傳一大堆參數回來
+            from ibm_watson import SpeechToTextV1
+            from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+
+            api = IAMAuthenticator(ibm_username)
+            speech_2_text = SpeechToTextV1(authenticator=api)
+
+            speech_2_text.set_service_url(ibm_password)
+            with open('record/test.wav', 'rb') as audio_file:
+                ibm_result = speech_2_text.recognize(
+                audio=audio_file,content_type="audio/wav"
+                ).get_result()
+                print("ibm : ",ibm_result['results'][0]['alternatives'][0]['transcript'])
+                ibm_results_buffer = ibm_result['results'][0]
+
             try:
                 #在網頁裡面改語言
                 wit_result = r.recognize_wit(audio,key=wit_key)
-                if wit_result == '':
+                if wit_result == '':                    
                     self.no_exception = False
                     wit_result = "Exception: wit cannot recognize!"
                     print(wit_result)
@@ -179,9 +176,9 @@ class RecordingFile(Listener):
                 self.no_exception = False
                 wit_result = "Exception: wit cannot recognize!"
                 print(wit_result)
-
+                
             try:
-                #每日限額100單位,沒有language參數
+                #每日100單位
                 houndify_result = r.recognize_houndify(audio,client_id=houndify_id,client_key=houndify_key)
                 if houndify_result == '':
                     self.no_exception = False
@@ -193,22 +190,14 @@ class RecordingFile(Listener):
                 self.no_exception = False
                 houndify_result = "Exception: houndify cannot recognize!"
                 print(houndify_result)
-
-#            try:
-                #離線套件,有language參數(要下載模型)
-#                sphinx_result = r.recognize_sphinx(audio,language='en-US')
-#                print("sphinx : ", sphinx_result)
-#            except:
-#                sphinx_result ="Exception: sphinx cannot recognize!" 
-#                print(sphinx_result)
+                
             print("-------------------------------")
-            results = [google_result, ibm_result, wit_result]
+            results = [google_result, ibm_results_buffer ['alternatives'][0]['transcript'], wit_result, houndify_result]
             return results
 
     def write_text(self, results):
-        text_file = open("speech_content.txt", "a")
+        text_file = open("speech_content.json", "w")
         text_file.write("google : %s\n" % results[0])
-        #text_file.write("bing : %s\n" % results[1])
         text_file.write("ibm : %s\n" % results[1])
         text_file.write("wit : %s\n" % results[2])
         text_file.write("houndify : %s\n\n" % results[3])
@@ -230,7 +219,7 @@ def main():
             if key == Key.esc and self.recording == False:
                 self.recording = True
                 r = Recorder()
-                recorder = r.open("test.wav")
+                recorder = r.open("record/test.wav")
                 recorder.start()
                 print("Speak!")
                 recorder.start_recording()
