@@ -32,9 +32,9 @@
 
 {% endblock content %}
 
-{% block script %}
+{% block tail %}
 <script type=text/javascript src="{{url_for('static', filename='js/common.js')}}"></script>
 <script type=text/javascript src="{{url_for('static', filename='js/send_tts.js')}}"></script>
 <script type=text/javascript src="{{url_for('static', filename='js/submit_post.js')}}"></script>
 <script type=text/javascript src="{{url_for('static', filename='js/reset.js')}}"></script>
-{% endblock script %}
+{% endblock tail %}
