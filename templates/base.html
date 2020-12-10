@@ -6,6 +6,7 @@
 	<meta name="viewpoint" content="width=device-width, initial-=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="shortcut icon" href="{{ url_for('static', filename='icon/favicon.ico') }}">
+	<link rel="stylesheet" href="{{url_for('static', filename='./css/main.css')}}">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	{% block styles %}
 		{{ bootstrap.load_css() }}
@@ -15,10 +16,10 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-expand-sm bg-light">
+	<nav id="nav" class="navbar navbar-expand-sm bg-light">
 		<a class="navbar-brand" href="{{url_for('home')}}">IM Project</a>
 		<div>
-			<ul class="navbar-nav mr-auto">
+			<ul class="navbar-nav ml-auto navbar-center">
 				<li class="nav-item">
 					<a class="nav-link" href="{{url_for('TTS')}}">Text to Speech</a>
 				</li>
@@ -33,6 +34,9 @@
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="{{url_for('speech_to_text')}}">Speech to text</a>
+				</li>
+				<li class="Final Demo">
+					<a class="nav-link" href="{{url_for('Demo')}}">Demo</a>
 				</li>
 			</ul>
 		</div>

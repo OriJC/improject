@@ -78,7 +78,10 @@ def TTR():
     # render the template texttorace.html
     return render_template('TextToRace.html')
 
-
+@app.route('/Demo')
+def Demo():
+    return render_template('finaldemo.html')
+    
 @app.route('/TTR', methods=['POST'])
 def PostToRace():
     if request.method == 'POST':
