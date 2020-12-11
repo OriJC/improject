@@ -146,7 +146,7 @@ function createAudioHTML(blob) {
         results_text = document.getElementById("results");
         recommendation_text = document.getElementById("recommendation");
         if (data["no_exception"]) {
-          results_text.innerHTML =
+          /* results_text.innerHTML =
             "google: " +
             data["results"][0] +
             "\n" +
@@ -157,9 +157,9 @@ function createAudioHTML(blob) {
             data["results"][2] +
             "\n" +
             "hundify: " +
-            data["results"][3];
-          results_text.innerHTML += "<hr>";
-          results_text.innerHTML += "\n" + data["alignment"];
+            data["results"][3]; 
+          results_text.innerHTML += "<hr>"; */
+          results_text.innerHTML = /*+= "\n" +*/ data["alignment"];
           recommendation_text.value =
             recommendation_text.value + data["recommendation"] + "\n";
         } else {
@@ -248,3 +248,13 @@ window.onbeforeunload = function () {
     .done(function (data) {})
     .fail(function (jqXHR, textStatus, error) {});
 };
+
+
+function send_ttr() {
+  /* send the data from speech_to_text.html from text_to_race.html */
+  var results_data = "";
+  var result_nodes = document.getElementsByClassName("results");
+  results_data = result_nodes.textContent;
+  document.cookie = results_data + ';secure';
+  location.href = '/TTR';
+}

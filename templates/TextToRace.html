@@ -6,6 +6,10 @@
 {% endblock head %}
 
 {% block content %}
+<script type=text/javascript src="{{url_for('static', filename='js/cookie_handler.js')}}"></script>
+<script>
+	window.onload = set_text;
+</script>
 
 <div id="ttrpart">
     <div class="d-sm-flex flex-wrap">

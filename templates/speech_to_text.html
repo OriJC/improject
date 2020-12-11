@@ -9,12 +9,11 @@
 </style>
 {% endblock head %}
 {% block content %}
-
 <div class="container">
     <div class="row">
         <button type="button" class="btn btn-primary" id="record-button" onclick="startRecording(this);">Record</button>
         <button type="button" class="btn btn-danger" id="stop-button" onclick="stopRecording(this);" disabled>Stop</button>
-        <button type="button" class="btn btn-primary" id="recognise-button" onclick="#" disabled>Recognise</button>
+        <button type="button" class="btn btn-primary" id="deduce-button" onclick="send_ttr();">Deduce</button>
     </div>
     <div class="row">
         <h2>Tuning</h2>
