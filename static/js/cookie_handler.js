@@ -11,7 +11,8 @@ function set_text() {
         conclusion = 'Waiting for input...';
     } else {
         // else place the cookie text into the <textarea>
-        $('textarea').val(conclusion);
+        console.log(conclusion);
+        $('textarea').text(conclusion);
 
         // clear the cookie
         document.cookie = '';

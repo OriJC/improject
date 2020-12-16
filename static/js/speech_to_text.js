@@ -252,9 +252,7 @@ window.onbeforeunload = function () {
 
 function send_ttr() {
   /* send the data from speech_to_text.html from text_to_race.html */
-  var result_nodes = document.getElementsByClassName("results");
-  var results_data = result_nodes.textContent;
-  console.log(results_data);
-  // document.cookie = results_data + ';secure';
-  // location.href = '/TTR';
+  var results_data = document.getElementById("results").value;
+  document.cookie = results_data + ';secure';
+  location.href = '/TTR';
 }
