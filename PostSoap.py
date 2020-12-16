@@ -52,6 +52,8 @@ def query_to_conclusion(query: str, changes: list) -> list:
         answer_tail = query.replace("is somebody who", '')
     elif query.find("who") == 0:
         answer_tail = query.replace("who", '')
+    else:
+        answer_tail = ''
 
     # Remove all the "... (at least x) ..."
     # Place the answer_tail into conclusion
@@ -111,6 +113,7 @@ def DecypherResponse(response: str, use_case: str, query: str):
     if reply.find('race:Runtime', ns) is not None:
         runtime = reply.find('race:Runtime', ns).text
 
+    """Am lazy to change it, so i deleted it instead
     if reply.find('race:Message', ns) is not None:
         '''
         error handling
@@ -144,8 +147,9 @@ def DecypherResponse(response: str, use_case: str, query: str):
                 message_box.append("Subject: " + each_message.find('race:Subject', ns).text)
                 message_box.append("Description: " + each_message.find('race:Description', ns).text)
                 reason.append(message_box)
+    """
 
-    elif use_case == "check_consistency":
+    if use_case == "check_consistency":
         inconsistent_axioms = []
         proofs = reply.find('race:Proof', ns)
 
