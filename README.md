@@ -4,6 +4,15 @@
 
 > 以下大部分的過程都在window 10的環境中進行，其他os可能操作和code上會有點不一樣。Python 需要3.7以後的版本 (因為3.7 subprocess.run 有新增 capture_output)
 
+## Git下載
+
+由於這個Repository裡面有Submodule，所以要完整的Clone完
+
+```bash
+git submodule init
+git submodule update
+```
+
 ## 虛擬環境
 
 ```bash
